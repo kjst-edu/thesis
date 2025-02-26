@@ -1,0 +1,17 @@
+$if(has-frontmatter)$
+\frontmatter
+$endif$
+
+$if(title)$\maketitle$endif$
+
+$if(abstract)$
+\chapter*{$abstract-title$}
+$abstract$
+$endif$
+
+
+% 通し番号に章番号をつけない
+\counterwithout{equation}{chapter}
+\counterwithout{table}{chapter}
+\counterwithout{figure}{chapter}
+\counterwithout{theorem}{section}

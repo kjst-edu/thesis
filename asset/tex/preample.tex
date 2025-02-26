@@ -1,0 +1,25 @@
+% 章見出しの上のスペースを小さくする
+\makeatletter
+\def\@makechapterhead#1{%
+    {\parindent \z@ \raggedright \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+    \if@mainmatter
+    \Large\headfont \@chapapp \thechapter\@chappos
+    \par\nobreak
+    \vskip \Cvs
+    \fi
+    \fi
+    \interlinepenalty\@M
+    \LARGE\headfont #1\par\nobreak
+    \vskip 2\Cvs}
+}
+
+\def\@makeschapterhead#1{%
+    {\parindent \z@ \raggedright
+    \normalfont
+    \interlinepenalty\@M
+    \LARGE\headfont #1\par\nobreak
+    \vskip 2\Cvs}}
+    %</book|report>
+
+\makeatother

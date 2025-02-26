@@ -1,0 +1,10 @@
+\ProvidesFile{custom.bbx}[日本心理学会 2022年版文献スタイルを修正したもの]
+\RequireBibliographyStyle{asset/biblatex/jpa/jpa}
+
+%%% 書籍タイトル %%%
+\DeclareFieldFormat[book,mvbook,online,thesis,inproceedings,incollection]{title}{%
+  \ifthenelse{\boolean{japanese}}{『#1』}{\emph{#1}}}
+
+%%% 論文タイトル %%%
+\DeclareFieldFormat[article,report,misc,inbook]{title}{%
+  \ifthenelse{\boolean{japanese}}{「#1」}{“#1,”}}

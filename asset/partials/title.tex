@@ -1,0 +1,51 @@
+\makeatletter
+\renewcommand{\maketitle}{
+    \begin{titlepage}
+        \begin{center}
+        $if(thesis-info.year)${\Large $thesis-info.year$ \par}$endif$%
+        $if(thesis-info.type)${\Large $thesis-info.type$ \par}$endif$%
+        %
+        \vfill
+        %
+        {\huge\bfseries\@title}$if(subtitle)$\par
+        \vspace{0.5cm}
+        {\Large\bfseries\bxjs@subtitle}$endif$\\
+        \vspace{4cm}
+        %
+        {\Large
+          \lineskip .75em
+          \begin{tabular}[t]{c}%
+            \@author
+          \end{tabular}\par}
+        \vfill
+        %
+        $if(thesis-info.university)${\Large $thesis-info.university$ \par}$endif$%
+        $if(thesis-info.department)${\Large $thesis-info.department$ \par}$endif$%
+        $if(thesis-info.seminar)${\Large $thesis-info.seminar$ \par}$endif$%
+        %
+        \end{center}
+        $if(date)$\vfill\hfill\small $date$$endif$
+    \end{titlepage}
+}
+\makeatother
+
+$if(title)$\title{$title$}$endif$
+$if(subtitle)$\subtitle{$subtitle$}$endif$
+
+$for(authors)$
+$if(it.metadata.yomi)$
+\usepackage{pxrubrica}
+$endif$
+$endfor$
+
+\author{$for(authors)$
+    {\Large 
+        $if(it.metadata.yomi)$
+            \jruby[g]{$it.name.literal$}{$it.metadata.yomi$}
+        $else$
+            $it.name.literal$
+        $endif$
+    }\\
+    $it.id$$sep$ \and 
+$endfor$}
+

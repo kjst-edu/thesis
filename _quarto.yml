@@ -1,0 +1,46 @@
+# 出力先
+project:
+  output-dir: _output
+
+# 著者に関する情報
+author:
+  - name: 公大 太郎
+    id: ada123
+    yomi: こうだい たろう
+  - name: 万博 次郎
+    id: ada124
+    yomi: ばんぱく じろう
+
+# 提出年度・提出先 
+thesis-info:
+  type: 卒業論文
+  year: 2024年度
+  university: ハム大
+  department: ADA学部
+  seminar: 大阪 次郎ゼミ
+
+# 日本語ローカライゼーション
+abstract-title: 要旨
+toc-title: 目次
+biblio-title: 参考文献
+proof-title: 証明
+
+crossref: 
+  # https://quarto.org/docs/reference/metadata/crossref.html
+  chapters: false
+  # 図
+  fig-title: 図
+  fig-prefix: 図
+  # 表
+  tbl-title: 表
+  tbl-prefix: 表
+  # 定理
+  thm-title: 定理
+  thm-prefix: 定理
+  # 式
+  eq-prefix: ""
+
+
+# More options...
+metadata-files: 
+  - asset/_advanced.yml

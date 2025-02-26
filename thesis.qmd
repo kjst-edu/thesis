@@ -1,0 +1,197 @@
+---
+title: 卒業論文テンプレート
+subtitle: Quarto ひな型
+abstract: |
+  ここに論文の要約を書いてください。本文の内容や構成にもよりますが、おおよそ1ページ程度におさまるように書くのがよいと思います。
+  
+  PDF に表示される見出しを変更したい場合は `_quarto.yml` ファイルの `abstract-title` の項目を変更してください。
+bibliography: references.bib
+---
+
+# はじめに
+
+この資料では IMRaD形式を参考に見出しを立てています。IMRaD は論文の議論を「導入（Introduction）」、「方法（Method）」、「結果（Result）」、「議論（Discussion）」の形式で提示する方法です。IMRaD の形式に当てはめにくい研究も存在するので、このひな形の章立てはあくまで参考です。指導教員とよく相談して決めてください。
+
+## 背景
+
+論文を動機づける文章を展開します。実社会、技術、分野の文献との関わりのなかでテーマの重要性を示します。
+個人的な関心が原動力であっても客観的に記述することを心がけてください。
+
+## 先行研究
+
+そのテーマに関する先行研究を書きます。
+
+論文全体を通して参考文献の提示のルールを守ってください。通常、本文中で言及していない参考文献は巻末の参考文献リストに載せません。
+このひな型は BibLaTeX を使用しています。MendeleyやZoteroで出力する場合、BibLaTeX 形式で出力してください。
+
+[@BrownWilliams2021]
+
+@DavisMiller2022
+
+@FujimotoYamamoto2024
+
+
+## 目的
+
+あなたの研究で成し遂げようとしていることを書いてください。
+上で説明する先行研究では解決できていない課題になっているはずです。
+
+
+# 方法
+
+上記の目的を達成するために採用した方法を記述します。
+
+- 研究デザイン
+- 分析手法
+- データの収集方法など
+
+論文の結果を再現するために必要な情報を記述します。
+
+手書きの図を挿入する方法。
+
+![demand and supply](img/picture.png){width=50% #fig-ds}
+
+@fig-ds はPowerPointで描いた図です。
+
+
+サンプルのため「Duncan's Occupational Prestige Data」を使用します[^duncan]。
+プログラム的に生成する表を文書に貼り付ける方法。@tbl-duncan のようにできる。
+
+[^duncan]: Duncan, O. D. (1961) A socioeconomic index for all occupations. In Reiss, A. J., Jr. (Ed.) _Occupations and Social Status_. Free Press [Table VI-1].
+
+
+
+# 結果
+
+結果とその解釈
+
+```{python}
+#| label: tbl-duncan
+#| tbl-cap: Duncan Data
+#| tbl-pos: 'h'
+#| echo: false
+
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+from stargazer.stargazer import Stargazer
+
+duncan_prestige = sm.datasets.get_rdataset("Duncan", "carData")
+duncan_prestige.data.describe()
+```
+
+
+プログラム的に生成される図の貼り付け方 (@fig-duncan)
+
+```{python}
+#| label: fig-duncan
+#| fig-cap: "Scatter plot"
+#| fig-pos: "h"
+#| echo: false
+import seaborn as sns
+
+sns.relplot(x="income", y="education", hue="type",
+            data=duncan_prestige.data)
+```
+
+
+$$
+\text{income}_i = \beta_0 + \beta_T \text{type Dummy}_i + \beta_E \text{education}_i + \varepsilon_i
+$$ {#eq-regression}
+
+Stargzer[^1]を用いて回帰分析の結果を表示する (@tbl-regression)。
+
+[^1]: https://pypi.org/project/stargazer/
+
+```{python}
+#| label: regression
+#| echo: false 
+
+formula1 = "income ~ education"
+model1 = smf.ols(formula1, data=duncan_prestige.data)
+result1 = model1.fit(cov_type='HC0')
+
+formula2 = "income ~ C(type) + education"
+model2 = smf.ols(formula2, data=duncan_prestige.data)
+result2 = model2.fit(cov_type='HC0')
+
+stargazer = Stargazer([result1, result2])
+```
+
+
+```{python}
+#| label: tbl-regression
+#| tbl-cap: Regression result
+#| echo: false
+#| output: asis
+
+from util import quarto
+
+quarto.print_table(stargazer)
+```
+
+
+
+# 議論
+
+結果から導かれる知見をまとめて、先行研究の文脈に位置付ける。
+より広い文脈への展開の方向性や研究の限界などを述べる。
+
+
+# 結論
+
+まとめる。
+
+
+# 謝辞 {.unnumbered}
+
+協力してもらった人に感謝する。
+
+
+
+<!-- 付録 -->
+\appendix
+
+# 定理の証明 {.appendix}
+
+付録の作り方。
+
+$$
+f(x) = \int_0^\infty g(y) dy
+$$ {#eq-integral}
+
+式 (@eq-integral) 
+
+
+
+::: {#thm-main-theorem}
+$$
+10^2 = 100
+$$
+:::
+
+
+::: {.proof}
+
+# 証明
+
+省略。
+
+:::
+
+相互参照には `@prefix-label` のようにする。 @thm-main-theorem
+
+図、表、式などの種類ごとにプリフィックスが決められているので、Quartoのドキュメントを参照すること[^crosref]。
+
+[^crosref]: https://quarto.org/docs/authoring/cross-references.html
+
+
+
+<!-- 巻末の参考文献リスト -->
+:::: {.content-hidden when-format="pdf"}
+
+# 参考文献 {.unnumbered}
+
+::: {#refs}
+:::
+
+::::

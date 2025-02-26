@@ -1,0 +1,47 @@
+# 出力方法
+format:
+  html:
+    toc: true
+    number-sections: true
+    html-math-method: katex
+    theme: flatly
+    appendix-style: none
+    lang: ja
+    #css: styles.css
+  pdf: 
+    documentclass: bxjsreport
+    pdf-engine: lualatex
+    classoption: 
+      - pandoc
+      - a4paper
+      - jbase=10.5pt
+      - textwidth=35zw
+      - number-of-lines=30
+    toc: true
+    number-sections: true
+    has-frontmatter: true
+    top-level-division: chapter
+    has-chapter: true
+    hyperrefoptions: 
+      - unicode
+      - colorlinks
+    indent: true
+    keep-md: true
+    #linestretch: 1.1
+    
+    # Style Customization
+    include-in-header: asset/tex/preample.tex
+    template-partials: 
+      - asset/partials/title.tex
+      - asset/partials/before-body.tex
+      - asset/partials/biblio.tex
+    # Bibliography
+    cite-method: biblatex
+    biblatexoptions: 
+      - backend=biber 
+      - style=asset/biblatex/custom
+      - datamodel=asset/biblatex/jpa/jpa
+    link-bibliography: true
+    # Debugging
+    keep-tex: true
+
